@@ -105,31 +105,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\coche.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coche1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cocheAni.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Obstaculo12.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\carre2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coche2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coche2 %281%29.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coche21.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coche2%283%29.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Carro1.png" />
