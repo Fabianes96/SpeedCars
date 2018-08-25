@@ -104,6 +104,7 @@
             this.Controls.Add(this.carro1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.carro1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carro2)).EndInit();

@@ -27,7 +27,8 @@ namespace Carro
             lblpuntos.Text = "0";
             lblPuntos2.Text = "0";
             CrearObstaculo(ListaObstaculos, this, 10, 80);
-            CrearObstaculo(ListaObstaculos2, this, 180,250);
+            CrearObstaculo(ListaObstaculos2, this, 180, 250);
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -171,7 +172,11 @@ namespace Carro
                 }
             }
             
-        }      
+        }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

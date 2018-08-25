@@ -1,10 +1,10 @@
-C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.Properties.Resources.resources
-C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.csproj.GenerateResource.Cache
 C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\bin\Debug\Carro.exe.config
 C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\bin\Debug\Carro.exe
 C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\bin\Debug\Carro.pdb
-C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.exe
-C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.pdb
 C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.Form1.resources
 C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.Form2.resources
+C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.Properties.Resources.resources
+C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.csproj.GenerateResource.Cache
+C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.exe
+C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.pdb
 C:\Users\FABIAN\documents\visual studio 2015\Projects\Carro\Carro\obj\Debug\Carro.csprojResolveAssemblyReference.cache
