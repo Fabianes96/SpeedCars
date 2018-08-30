@@ -101,6 +101,7 @@
             // 
             // timer3
             // 
+            this.timer3.Interval = 1000;
             this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
             // 
             // lblTiempo
@@ -111,6 +112,7 @@
             this.lblTiempo.Size = new System.Drawing.Size(35, 13);
             this.lblTiempo.TabIndex = 4;
             this.lblTiempo.Text = "label1";
+            this.lblTiempo.Visible = false;
             // 
             // label2
             // 
@@ -160,6 +162,7 @@
             this.label4.Size = new System.Drawing.Size(86, 13);
             this.label4.TabIndex = 11;
             this.label4.Text = "Puntuación Final";
+            this.label4.Visible = false;
             // 
             // lblScoreFinal
             // 
@@ -171,15 +174,17 @@
             this.lblScoreFinal.Name = "lblScoreFinal";
             this.lblScoreFinal.Size = new System.Drawing.Size(98, 123);
             this.lblScoreFinal.TabIndex = 10;
+            this.lblScoreFinal.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(357, 390);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(13, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "label5";
+            this.label5.Text = "0";
+            this.label5.Visible = false;
             // 
             // Form1
             // 

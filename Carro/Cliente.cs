@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Carro
 {
-    class Cliente: BaseThread
+    class Cliente
     {
         private Socket cliente;
         private NetworkStream oss;
@@ -52,19 +52,7 @@ namespace Carro
 
             }
         }
-        public override void RunThread()
-        {
-            try
-            {                
-                mensaje = br.Read().ToString();
-                
-            }
-            catch (Exception e)
-            {
-
-                MessageBox.Show(e.ToString());
-            }
-        }
+       
 
     }
 }

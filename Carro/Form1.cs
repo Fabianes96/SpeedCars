@@ -14,13 +14,14 @@ namespace Carro
 {
     public partial class Form1 : Form
     {
+        
         List<PictureBox> ListaObstaculos = new List<PictureBox>();
         List<PictureBox> ListaObstaculos2 = new List<PictureBox>();
         Random RnTipoObstaculo = new Random();
         private Socket _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         byte[] receivedBuf = new byte[1024];
-        int contadorFinal = 0;
-        int contadorJugadores = 0;
+        int contadorFinal=0;
+        int contadorJugadores;
         int velocidad1 = 5;
         int velocidad2 = 5;       
         int totalPuntos1;
@@ -29,21 +30,30 @@ namespace Carro
         int miPuntaje=0;
         int maxPuntaje=-10000;
         string texto;
-        string direccion ="192.168.0.14";
+        string direccion;
         public Form1()
         {
             //direccion = Microsoft.VisualBasic.Interaction.InputBox("Escriba la IP",
             //    "Texto del dialogo", "");
-           // IPEndPoint miDireccion = new IPEndPoint(IPAddress.Parse(dire));
+            // IPEndPoint miDireccion = new IPEndPoint(IPAddress.Parse(dire));
+            InitializeComponent();
+            direccion = Microsoft.VisualBasic.Interaction.InputBox(
+                "Escriba la IP del servidor", "Speed Cars", "");
+            if (direccion=="")
+            {
+               return;
+            }
             texto = Microsoft.VisualBasic.Interaction.InputBox(
-                "Escriba un nombre", "Texto del dialogo", "");
+                "Escriba un nombre", "Speed Cars", "");
             if (texto.Contains(" ")) { texto = texto.Replace(' ', '_'); }
             CheckForIllegalCrossThreadCalls = false;
             Conectar();
+            
             _clientSocket.BeginReceive(receivedBuf, 0, receivedBuf.Length, SocketFlags.None, new AsyncCallback(ReceiveData), _clientSocket);
             byte[] buffer = Encoding.ASCII.GetBytes(texto);
             _clientSocket.Send(buffer);
-            InitializeComponent();
+            
+            System.Threading.Thread.Sleep(5000);
             timer3.Enabled = true;
             timer1.Enabled = true;
             timer2.Enabled = true;
@@ -87,31 +97,48 @@ namespace Carro
                 int received = socket.EndReceive(ar);
                 byte[] dataBuf = new byte[received];
                 Array.Copy(receivedBuf, dataBuf, received);   
-                string texto = (Encoding.ASCII.GetString(dataBuf));                
-                if (texto.Contains("°"))
+                string texto = (Encoding.ASCII.GetString(dataBuf));
+                string aux;              
+                if (texto.Contains("#"))
                 {
-                    string aux = texto.Substring(texto.IndexOf("°")+1);
-                    contadorFinal++;
-                    MessageBox.Show("Aqui pas´´e");
-                    if (maxPuntaje< int.Parse(aux))
+                    if (texto.Contains("_"))
                     {
-                        maxPuntaje = int.Parse(aux);
-                    }                    
-                }
-                
-                if (texto.Contains(": "))
-                {
-                    lblScoreFinal.Text = texto + Environment.NewLine;
+                        contadorFinal++;
+                        //aux = texto.Substring(texto.IndexOf("_") + 1);
+                        label5.Text = contadorFinal.ToString();
+                    }
+                    else
+                    {
+                        aux = texto.Substring(texto.IndexOf("#") + 1);                        
+                        //if (maxPuntaje < int.Parse(aux))
+                        //{
+                        //    maxPuntaje = int.Parse(aux);
+                        //}
+                    }                                      
                 }
                 else
                 {
-
-                    label2.Text = texto+ Environment.NewLine;
-                    contadorJugadores++;
-                   
-                    //rbPuntaje.AppendText("\nServer: " + label2.Text);              
+                   if (texto.Contains("%"))
+                    {
+                           string a = texto.Substring(texto.IndexOf("%") + 1);                            
+                           contadorJugadores = int.Parse(a);
+                    }
+                    else
+                    {
+                        if (texto.Contains(": "))
+                        {
+                            lblScoreFinal.Text = texto + Environment.NewLine;
+                        }
+                        else
+                        {
+                            label2.Text = texto + Environment.NewLine;
+                            //rbPuntaje.AppendText("\nServer: " + label2.Text);              
+                        }
+                    }                    
                 }
                 _clientSocket.BeginReceive(receivedBuf, 0, receivedBuf.Length, SocketFlags.None, new AsyncCallback(ReceiveData), _clientSocket);
+
+
             }
             catch (Exception e)
             {
@@ -126,7 +153,7 @@ namespace Carro
                 int received = socket.EndReceive(ar);
                 byte[] dataBuf = new byte[received];
                 Array.Copy(receivedBuf, dataBuf, received);
-                lblPuntuacion.Text = (Encoding.ASCII.GetString(dataBuf)) + Environment.NewLine;                           
+               // lblPuntuacion.Text = (Encoding.ASCII.GetString(dataBuf)) + Environment.NewLine;                           
                 _clientSocket.BeginReceive(receivedBuf, 0, receivedBuf.Length, SocketFlags.None, new AsyncCallback(enviarPuntaje), _clientSocket);
             }
             catch (Exception e)
@@ -135,25 +162,6 @@ namespace Carro
             }
 
         }
-        private void notificarDesconeccion(IAsyncResult ar)
-        {
-            try
-            {
-                Socket socket = (Socket)ar.AsyncState;
-                int received = socket.EndReceive(ar);
-                byte[] dataBuf = new byte[received];
-                Array.Copy(receivedBuf, dataBuf, received);
-                label5.Text = Encoding.ASCII.GetString(dataBuf);
-                _clientSocket.BeginReceive(receivedBuf, 0, receivedBuf.Length, SocketFlags.None, new AsyncCallback(notificarDesconeccion), _clientSocket);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
-
-        }
-
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             foreach (PictureBox ImagenCarro in ListaObstaculos2)
@@ -312,8 +320,7 @@ namespace Carro
         }        
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-                               
+        {                               
             //_clientSocket.Close();            
             Application.Exit();
         }
@@ -339,27 +346,48 @@ namespace Carro
             timer1.Stop();
             timer2.Stop();
             timer3.Stop();
+            label4.Visible = true;
+            lblScoreFinal.Visible = true;
             miPuntaje = int.Parse(lblPuntuacion.Text);
-            MessageBox.Show("Fin del juego, espere el resultado");            
-            _clientSocket.BeginReceive(receivedBuf, 0, receivedBuf.Length, SocketFlags.None, new AsyncCallback(enviarPuntaje), _clientSocket);
-            byte[] buffer = Encoding.ASCII.GetBytes(texto + ": " + lblPuntuacion.Text);
-            _clientSocket.Send(buffer);
-            MessageBox.Show(contadorFinal.ToString()+ " " + contadorJugadores.ToString() );
             
-            //while (true)
-            //{//arreglar esto
-            //    if (contadorFinal == contadorJugadores)
-            //    {
-            //        if (ganador())
+            _clientSocket.BeginReceive(receivedBuf, 0, receivedBuf.Length, SocketFlags.None, new AsyncCallback(enviarPuntaje), _clientSocket);
+            byte[] buffer = Encoding.ASCII.GetBytes(texto + ": " + miPuntaje.ToString());
+            _clientSocket.Send(buffer);
+            //System.Threading.Thread.Sleep(1000);
+            MessageBox.Show("Fin del juego, espere el resultado de la partida");
+            
+            
+            //if (contadorJugadores != int.Parse(label5.Text))
+            //{
+
+            //    while (contadorJugadores != int.Parse(label5.Text))
+            //    {//arreglar esto
+
+            //        if (contadorJugadores == int.Parse(label5.Text))
             //        {
-            //            MessageBox.Show("Felicidades, ha ganado");
+            //            if (ganador())
+            //            {
+            //                MessageBox.Show("Felicidades, ha ganado");
+            //            }
+            //            else
+            //            {
+            //                MessageBox.Show("Ha perdido");
+            //            }
+            //            break;
             //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Ha perdido");
-            //        }
-            //        break;
+            //        // MessageBox.Show(contadorFinal.ToString() + " " + contadorJugadores.ToString());
             //    }
+            //}
+            //else
+            //{
+            //    if (ganador())
+            //    {
+            //        MessageBox.Show("Felicidades, ha ganado");
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Ha perdido");
+            //    }                
             //}
         }
         bool ganador()
