@@ -21,28 +21,35 @@ namespace Carro
         //"localhost";
         private Form form;
         private string mensaje;
-        
-     
-
-        public Cliente(Form f1, string host)
+        public Cliente(Form f1, string host, string m )
         {
             try
             {
-                form = f1;
+                mensaje = m;
+                form = f1;                
                 cliente = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint dirCliente = new IPEndPoint(IPAddress.Parse(host), puerto);
                 cliente.Connect(dirCliente);
-                oss = new NetworkStream(cliente);
-                iss = new NetworkStream(cliente);
-                br = new BinaryReader(iss);
-                bw = new BinaryWriter(oss);
-                form.Show();
-
-
+                //oss = new NetworkStream(cliente);
+                //iss = new NetworkStream(cliente);
+                //br = new BinaryReader(iss);
+                //bw = new BinaryWriter(oss);
+                //form.Show();
             }
-            catch (Exception)
+            catch (Exception e)
             {                
-                throw;
+                MessageBox.Show(e.ToString());
+            }
+        }
+
+        public void enviar(string men)
+        {
+            while (true)
+            {
+                cliente.Send(Encoding.ASCII.GetBytes(men), 0, men.Length, SocketFlags.None);
+                byte[] mensajeServidor = new byte[1024];
+                int size =cliente.Receive(mensajeServidor);
+
             }
         }
         public override void RunThread()
